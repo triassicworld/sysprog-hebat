@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <devices>
-	<lamp port="7">	
+	<lamp port="7">
+		<name>A</name>
 		<timer>20:30</timer>
-		<status>OFF</status></lamp>
-	<lamp port="11">
-		
 		<status>OFF</status>
-	<timer>10:10</timer></lamp>
+	</lamp>
+	<lamp port="11">
+		<name>B</name>
+		<status>OFF</status>
+		<timer>10:10</timer>
+	</lamp>
 	<lamp port="13">
-		
-		
-	<status>ON</status><timer>14:03</timer></lamp>
+		<name>C</name>
+		<status>ON</status>
+		<timer>14:03</timer>
+	</lamp>
 </devices>
