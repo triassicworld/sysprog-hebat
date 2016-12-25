@@ -4,14 +4,14 @@
 		<name>A</name>
 		
 		
-	<timer>00:30</timer><status>ON</status></lamp>
+	<timer>00:30</timer><status>OFF</status></lamp>
 	<lamp port="11">
 		<name>B</name>
 		
 		
-	<timer>01:42</timer><status>OFF</status></lamp>
+	<timer>01:42</timer><status>ON</status></lamp>
 	<lamp port="13">
 		<name>C</name>
 		
-	<status>OFF</status><timer>01:59</timer></lamp>
+	<timer>01:59</timer><status>OFF</status></lamp>
 </devices>

@@ -33,4 +33,17 @@ $(document).ready(function(){
 		});
 		
 	});
+	
+	$('.removeButton').click(function(){
+		$port = $(this).attr('value');
+		$(this).prop('disabled',true);
+		$.ajax({
+			url:"switch.php",
+			type:"POST",
+			data:{type:"remove", pin:$(this).attr('value')},
+			success: function(response) { $(this).prop('disabled',false); location.reload() },
+			complete: function(response) { $(this).prop('disabled',false)}
+		});
+		
+	});
 });
