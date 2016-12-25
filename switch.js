@@ -29,7 +29,8 @@ $(document).ready(function(){
 			url:"switch.php",
 			type:"POST",
 			data:{type:"timer", pin:$(this).attr('value'),time:$("#timeInput"+$(this).attr('value')).val()},
-			complete: function(response) { $(this).prop('disabled',false)}
+			success: function(response) { $(this).prop('disabled',false); location.reload();},
+			complete: function(response) { $(this).prop('disabled',false);}
 		});
 		
 	});
@@ -41,7 +42,7 @@ $(document).ready(function(){
 			url:"switch.php",
 			type:"POST",
 			data:{type:"remove", pin:$(this).attr('value')},
-			success: function(response) { $(this).prop('disabled',false); location.reload() },
+			success: function(response) { $(this).prop('disabled',false); location.reload(); },
 			complete: function(response) { $(this).prop('disabled',false)}
 		});
 		

@@ -13,5 +13,5 @@
 	<lamp port="13">
 		<name>C</name>
 		
-	<timer>01:59</timer><status>OFF</status></lamp>
+	<status>OFF</status><timer/></lamp>
 </devices>
