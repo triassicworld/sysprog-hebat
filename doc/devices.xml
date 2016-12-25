@@ -3,16 +3,15 @@
 	<lamp port="7">
 		<name>A</name>
 		<timer>20:30</timer>
-		<status>OFF</status>
+		<status>ON</status>
 	</lamp>
 	<lamp port="11">
 		<name>B</name>
-		<status>OFF</status>
+		<status>ON</status>
 		<timer>10:10</timer>
 	</lamp>
 	<lamp port="13">
 		<name>C</name>
-		<status>ON</status>
-		<timer>14:03</timer>
+		<status>OFF</status>
 	</lamp>
 </devices>

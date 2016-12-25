@@ -17,17 +17,9 @@ $(document).ready(function(){
 	
 	var $out="";
 	function tampilkanDataUser(data){
-		$out+="<table id='dtable'>";
-		$out+="<tr>";
-			$out+="<td>Device</td>";
-			$out+="<td>Port</td>";
-			$out+="<td>Timer</td>";
-			$out+="<td>Action</td>";
-		$out+="</tr>";
-		$timerArray = new Array();
-		$count=0;
-		$(data).find('lamp').each(function(){
-			$count = $count+1;
+		// Parse all data on XML into an array of objects: {name, port, status, timer}
+		var $lampArray = [];
+		$(data).find('lamp').each(function() {
 			var $port=$(this).attr('port');
 			var $name=$(this).find('name').text();
 			var $status=$(this).find('status').text();
@@ -35,49 +27,59 @@ $(document).ready(function(){
 			if ($timer) {
 				$timer = $timer.text().split(":");
 			}
-			$timerArray.push($timer);
-			$out+="<tr>";
-				$out+="<td>"+$name+"</td>";
-				$out+="<td>"+$port+"</td>";
-				$out+="<td>";
-					$out+="<form action='index.html' method = 'POST'>";
-						//$out+="<input type='time' name='time'> ";
-						$out+="<span><select></select>:<select></select>:<select></select></span> ";
-						$out+="<button type='button' id='time"+$port+"' class='timerButton'> Set Timer </button>";
-					$out+="</form>";
-				$out+="</td>";
-				$out+="<td>";
-					$out+="<form action='index.html' method = 'POST'>";
-						$out+="<input class='but"+$port+"' type='submit' name='on' id='on' value='Turn On' " + ($status == "ON" ? "disabled" : "") + ">";
-						$out+="<input class='but"+$port+"' type='submit' name='off' id='off' value='Turn Off' " + ($status == "OFF" ? "disabled" : "") + ">";
-					$out+="</form>";
-				$out+="</td>";
-			$out+="</tr>";
+			$lampArray.push({ name: $name, port: $port, status:$status, timer:$timer});
 		});
+		// Draw table on HTML
+		$out+="<table id='dtable'>";
+		$out+="<tr>";
+			$out+="<td>Device</td>";
+			$out+="<td>Port</td>";
+			$out+="<td>Timer</td>";
+			$out+="<td>Action</td>";
+		$out+="</tr>";
+		for (var i = 0; i < $lampArray.length; i++) {
+			$lamp = $lampArray[i];
+			$name = $lamp["name"];
+			$port = $lamp["port"];
+			$status = $lamp["status"];
+		
+			$out+=	"<tr>";
+			$out+=		"<td>"+$name+"</td>";
+			$out+=		"<td>"+$port+"</td>";
+			$out+=		"<td>";
+			$out+=			"<span class='timerSelection' id='timerSelection"+$port+"'><select id='timerSelectHour"+$port+"'></select>:<select id='timerSelectMinute"+$port+"'></select>:<select id='timerSelectSecond"+$port+"'></select></span> ";
+			$out+=			"<button type='button' id='time"+$port+"' class='timerButton'> Set Timer </button>";
+			$out+=		"</td>";
+			$out+=		"<td>";
+			$out+=			"<button class='onButton' type='button' id='onBut"+$port+"' value='Turn On' " + ($status == "ON" ? "disabled" : "") + ">Turn On</button>";
+			$out+=			"<button class='offButton' type='button' id='offBut"+$port+"' value='Turn Off' " + ($status == "OFF" ? "disabled" : "") + ">Turn Off</button>";
+			$out+=		"</td>";
+			$out+="</tr>";
+		}
 		$out+="</table>";
 		$('#devices').html($out);
 		
-		for (var j = 0; j < $count; j++){
-			var dateobj=new Date();
-			var selections=document.getElementsByTagName("select");
-			hourselect=selections[0+3*j];
-			minuteselect=selections[1+3*j];
-			secondselect=selections[2+3*j];
+		for (var j = 0; j < $lampArray.length; j++){
+			$lamp = $lampArray[j];
+			$timer = $lamp["timer"];
+			hourselect=document.getElementById("timerSelectHour" + $lamp["port"]);
+			minuteselect=document.getElementById("timerSelectMinute" + $lamp["port"]);
+			secondselect=document.getElementById("timerSelectSecond" + $lamp["port"]);;
 			
 			// NOTE:
 			// Index 0 is reserved for default value --:--:--
 			// Index 1..60 is filled for value 00..59 (except hours, which is 00..23 on index 1..24)
 			
 			// Default selection, no timer set currently, or to delete timer
-			hourselect[0]=new Option("--", "--", false, !$timerArray[j]);
-			minuteselect[0]=new Option("--", "--", false, !$timerArray[j]);
-			secondselect[0]=new Option("--", "--", false, !$timerArray[j]);			
+			hourselect[0]=new Option("--", "--", false, !$timer);
+			minuteselect[0]=new Option("--", "--", false, !$timer);
+			secondselect[0]=new Option("--", "--", false, !$timer);			
 			for (var i=0; i<60; i++){
 				if (i<24) { //If still within range of hours field: 0-23
-					hourselect[i+1]=new Option(padfield(i), padfield(i), false, parseInt($timerArray[j][0])==i);
+					hourselect[i+1]=new Option(padfield(i), padfield(i), false, $timer && parseInt($timer[0])==i);
 				}
-				minuteselect[i+1]=new Option(padfield(i), padfield(i), false, parseInt($timerArray[j][1])==i);
-				secondselect[i+1]=new Option(padfield(i), padfield(i), false, parseInt($timerArray[j][2])==i);
+				minuteselect[i+1]=new Option(padfield(i), padfield(i), false, $timer && parseInt($timer[1])==i);
+				secondselect[i+1]=new Option(padfield(i), padfield(i), false, $timer && parseInt($timer[2])==i);
 			}
 		}
 	}
