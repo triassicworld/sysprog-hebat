@@ -2,16 +2,16 @@
 <devices>
 	<lamp port="7">
 		<name>A</name>
-		<timer>20:30</timer>
-		<status>ON</status>
-	</lamp>
+		
+		
+	<timer>00:30</timer><status>ON</status></lamp>
 	<lamp port="11">
 		<name>B</name>
-		<status>ON</status>
-		<timer>10:10</timer>
-	</lamp>
+		
+		
+	<timer>01:42</timer><status>OFF</status></lamp>
 	<lamp port="13">
 		<name>C</name>
-		<status>OFF</status>
-	</lamp>
+		
+	<status>OFF</status><timer>01:59</timer></lamp>
 </devices>

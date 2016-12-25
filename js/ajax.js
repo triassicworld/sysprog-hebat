@@ -23,10 +23,7 @@ $(document).ready(function(){
 			var $port=$(this).attr('port');
 			var $name=$(this).find('name').text();
 			var $status=$(this).find('status').text();
-			var $timer = $(this).find('timer');
-			if ($timer) {
-				$timer = $timer.text().split(":");
-			}
+			var $timer = $(this).find('timer').text();
 			$lampArray.push({ name: $name, port: $port, status:$status, timer:$timer});
 		});
 		// Draw table on HTML
@@ -42,23 +39,25 @@ $(document).ready(function(){
 			$name = $lamp["name"];
 			$port = $lamp["port"];
 			$status = $lamp["status"];
+			$timer = $lamp["timer"];
 		
 			$out+=	"<tr>";
 			$out+=		"<td>"+$name+"</td>";
 			$out+=		"<td>"+$port+"</td>";
 			$out+=		"<td>";
-			$out+=			"<span class='timerSelection' id='timerSelection"+$port+"'><select id='timerSelectHour"+$port+"'></select>:<select id='timerSelectMinute"+$port+"'></select>:<select id='timerSelectSecond"+$port+"'></select></span> ";
-			$out+=			"<button type='button' id='time"+$port+"' class='timerButton'> Set Timer </button>";
+			$out+=			"<input type='time' id='timeInput"+$port+"' value="+$timer+">"	
+			$out+=			"<button type='button' id='time"+$port+"' class='timerButton' value='"+$port+"'> Set Timer </button>";
 			$out+=		"</td>";
 			$out+=		"<td>";
-			$out+=			"<button class='onButton' type='button' id='onBut"+$port+"' value='Turn On' " + ($status == "ON" ? "disabled" : "") + ">Turn On</button>";
-			$out+=			"<button class='offButton' type='button' id='offBut"+$port+"' value='Turn Off' " + ($status == "OFF" ? "disabled" : "") + ">Turn Off</button>";
+			$out+=			"<button class='onButton' type='button' id='onBut"+$port+"' value='"+$port+"' " + ($status == "ON" ? "hidden" : "") + ">ON</button>";
+			$out+=			"<button class='offButton' type='button' id='offBut"+$port+"' value='"+$port+"' " + ($status == "OFF" ? "hidden" : "") + ">OFF</button>";
 			$out+=		"</td>";
 			$out+="</tr>";
 		}
 		$out+="</table>";
 		$('#devices').html($out);
-		
+		/*
+		// Insert timer data according to XML file
 		for (var j = 0; j < $lampArray.length; j++){
 			$lamp = $lampArray[j];
 			$timer = $lamp["timer"];
@@ -82,6 +81,7 @@ $(document).ready(function(){
 				secondselect[i+1]=new Option(padfield(i), padfield(i), false, $timer && parseInt($timer[2])==i);
 			}
 		}
+		*/
 	}
 	
 });

@@ -2,11 +2,11 @@
 $dom=new DOMDocument();
 $dom->load("doc/devices.xml");
 $root=$dom->documentElement;
+
 $pin = $_POST['pin'];
 
 $lamp = null;
 $lamps = $root->getElementsByTagName('lamp');
-
 
 foreach ($lamps as $lampTmp) {
 	if ($lampTmp->getAttribute('port') == $pin) {
@@ -14,6 +14,7 @@ foreach ($lamps as $lampTmp) {
 		break;
 	}
 }
+
 //$lamp = $root->getElementsByTagName("lamp");
 
 if ($_POST['type'] == "switch") {
@@ -38,7 +39,9 @@ else if ($_POST['type'] == "timer") {
 	$time = $_POST['time'];
 
 	$timer = $lamp->getElementsByTagName("timer")->item(0);
-	$timer->parentNode->removeChild($timer);
+	if ($timer) {
+		$timer->parentNode->removeChild($timer);
+	}
 
 	$newTimer = $dom->createElement("timer", $time);
 	$lamp->appendChild($newTimer);

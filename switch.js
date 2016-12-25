@@ -1,28 +1,36 @@
 $(document).ready(function(){
-	$('.on').click(function(){
+	$('.onButton').click(function(){
+		$port = $(this).attr('value');
+		$(this).prop('disabled',true);
 		$.ajax({
 			url:"switch.php",
 			type:"POST",
-			data:{type:"switch",pin:$(this).attr('id'),status:"ON"}
+			data:{type:"switch",pin:$(this).attr('value'),status:"ON"},
+			success: function(response) { $("#offBut" + $port).prop('hidden',false); $("#onBut" + $port).prop('hidden',true); },
+			complete: function(response) {	$("#onBut" + $port).prop('disabled',false); }
 		});
 	});
 
-	$('.off').click(function(){
+	$('.offButton').click(function(){
+		$port = $(this).attr('value');
+		$(this).prop('disabled',true);
 		$.ajax({
 			url:"switch.php",
 			type:"POST",
-			data:{type:"switch",pin:$(this).attr('id'),status:"OFF"}
+			data:{type:"switch",pin:$(this).attr('value'),status:"OFF"},
+			success: function(response) { $("#onBut" + $port).prop('hidden',false); $("#offBut" + $port).prop('hidden',true); },
+			complete: function(response) {	$("#offBut" + $port).prop('disabled',false); }
 		});
 	});
 
-	$('.timer').click(function(){
+	$('.timerButton').click(function(){
+		$(this).prop('disabled',true);
 		$.ajax({
 			url:"switch.php",
 			type:"POST",
-			data:{type:"timer",pin:$(this).attr('id'),time:$("#time"+$(this).attr('id')).val()},
-			success: function(response) {
-				alert(response);
-			}
+			data:{type:"timer", pin:$(this).attr('value'),time:$("#timeInput"+$(this).attr('value')).val()},
+			complete: function(response) { $(this).prop('disabled',false)}
 		});
+		
 	});
 });

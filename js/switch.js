@@ -1,17 +1,23 @@
 $(document).ready(function(){
-	$('.on').click(function(){
+	$('.onButton').click(function(){
 		$.ajax({
-			url:"php/switch.php",
+			url:"../switch.php",
 			type:"POST",
-			data:{pin:$(this).attr('id'),status:"ON"}
+			data:{pin:$(this).attr('value'),status:"ON"},
+			success: function(resp){
+				alert($(this).attr('value'));
+			}
 		});
 	});
 
-	$('.off').click(function(){
+	$('.offButton').click(function(){
 		$.ajax({
-			url:"php/switch.php",
+			url:"../switch.php",
 			type:"POST",
-			data:{pin:$(this).attr('id'),status:"OFF"}
+			data:{pin:$(this).attr('value'),status:"OFF"},
+			success: function(resp){
+				alert($(this).attr('value'));
+			}
 		});
 	});
 });
